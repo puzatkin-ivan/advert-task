@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Advert;
 use App\Repository\AdvertRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdvertsRelevantController extends AbstractController
@@ -24,12 +24,14 @@ class AdvertsRelevantController extends AbstractController
                 'code' => '200',
                 'data' => $this->processAdvert($ads),
             ];
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
         }
         catch (\Exception $exception)
         {
             $response = [
                 'message' => $exception->getMessage(),
-                'code' => '500',
+                'code' => '400',
             ];
         }
 
@@ -47,6 +49,7 @@ class AdvertsRelevantController extends AbstractController
                 'text' => $advert->getText(),
                 'banner' => $advert->getBanner(),
             ];
+            $advert->incrementShowCount();
         }
         return $result;
     }

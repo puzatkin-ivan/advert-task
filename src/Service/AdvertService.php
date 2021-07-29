@@ -18,7 +18,7 @@ class AdvertService
     /**
      * @throws \Exception
      */
-    public function addAdvert(array $advertData): Advert
+    public function add(array $advertData): Advert
     {
         $this->validateAdvertData($advertData);
         return $this->repository->addAdvert(
@@ -27,6 +27,12 @@ class AdvertService
             $advertData['limit'],
             $advertData['banner']
         );
+    }
+
+    public function edit(int $id, array $advertData): Advert
+    {
+        $this->validateAdvertData($advertData);
+
     }
 
     private function validateAdvertData(array $advertData): void

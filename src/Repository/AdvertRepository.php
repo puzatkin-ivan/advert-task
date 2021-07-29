@@ -24,6 +24,7 @@ class AdvertRepository extends ServiceEntityRepository
         $advert = new Advert();
         $advert->setText($text);
         $advert->setPrice($price);
+        $advert->setShowCount(0);
         $advert->setShowLimit($limit);
         $advert->setBanner($banner);
 
@@ -37,8 +38,9 @@ class AdvertRepository extends ServiceEntityRepository
     public function getAdvertByRelevant(): array
     {
         $queryBuilder = $this->createQueryBuilder('a')
+            ->where('a.show_count < a.show_limit')
             ->orderBy('a.price', 'DESC');
 
-        return $queryBuilder->getQuery()->getArrayResult();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

@@ -106,4 +106,9 @@ class Advert
 
         return $this;
     }
+
+    public function incrementShowCount(): void
+    {
+        $this->show_count++;
+    }
 }

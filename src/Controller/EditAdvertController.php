@@ -1,24 +1,29 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Advert;
 use App\Service\AdvertService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AddAdvertController extends AbstractController
+class EditAdvertController extends AbstractController
 {
     /**
-     * @Route("/ads", methods={"POST"})
+     * @Route("/ads/:id", methods={"POST"})
+     * @param Request $request
+     * @param AdvertService $service
+     * @return JsonResponse
      */
-    public function add(Request $request, AdvertService $service): JsonResponse
+    public function edit(Request $request, AdvertService $service): JsonResponse
     {
         try
         {
+            $advertId = $request->get('id');
             $advertData = $request->request->all();
-            $advert = $service->add($advertData);
+            $advert = $service->edit($advertId, $advertData);
 
             $response = [
                 'message' => 'OK',
@@ -29,6 +34,7 @@ class AddAdvertController extends AbstractController
                     'banner' => $advert->getBanner(),
                 ],
             ];
+
         }
         catch (\Exception $ex)
         {
