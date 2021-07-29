@@ -35,6 +35,26 @@ class AdvertRepository extends ServiceEntityRepository
         return $advert;
     }
 
+    public function editAdvert(int $id, string $text, float $price, int $limit, string $banner): Advert
+    {
+        $advert = $this->findOneBy(['id' => $id]);
+        if (!$advert)
+        {
+            throw new \Exception("Advert with $id does not exist");
+        }
+
+        $advert->setText($text);
+        $advert->setPrice($price);
+        $advert->setShowCount(0);
+        $advert->setShowLimit($limit);
+        $advert->setBanner($banner);
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->flush();
+
+        return $advert;
+    }
+
     public function getAdvertByRelevant(): array
     {
         $queryBuilder = $this->createQueryBuilder('a')

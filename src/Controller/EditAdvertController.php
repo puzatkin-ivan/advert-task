@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditAdvertController extends AbstractController
 {
     /**
-     * @Route("/ads/:id", methods={"POST"})
+     * @Route("/ads/{id}", methods={"POST"})
      * @param Request $request
      * @param AdvertService $service
      * @return JsonResponse

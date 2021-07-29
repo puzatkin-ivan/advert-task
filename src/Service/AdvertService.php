@@ -32,7 +32,12 @@ class AdvertService
     public function edit(int $id, array $advertData): Advert
     {
         $this->validateAdvertData($advertData);
-
+        return $this->repository->editAdvert($id,
+            $advertData['text'],
+            $advertData['price'],
+            $advertData['limit'],
+            $advertData['banner']
+        );
     }
 
     private function validateAdvertData(array $advertData): void
